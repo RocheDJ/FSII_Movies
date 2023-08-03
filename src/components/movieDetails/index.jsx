@@ -5,12 +5,13 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import MonetizationIcon from "@mui/icons-material/MonetizationOn";
 import StarRate from "@mui/icons-material/StarRate";
 import Typography from "@mui/material/Typography";
-
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews";
-
+import InputLabel from "@mui/material/InputLabel";
 import YouTube from "../youtube";
 
 const styles = {
@@ -34,19 +35,32 @@ const styles = {
 };
 
 const MovieDetails = ({ movie, videoData }) => {
-  const [drawerOpen, setDrawerOpen] = useState(false); // New
-  const [clipFilter,setClipFilter] = useState("Clip");
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  let displayedVideos = videoData
-  .filter((p) => {
+  const [clipFilter, setClipFilter] = useState("Clip");
+
+  const clipFilterBy = {
+    fields: [
+      { id: "0", name: "Clip" },
+      { id: "1", name: "Featurette" },
+      { id: "2", name: "Behind the Scenes" },
+      { id: "3", name: "Trailer" },
+    ],
+  };
+
+  const clipFilters = clipFilterBy.fields;
+
+  let displayedVideos = videoData.filter((p) => {
     return p.type === clipFilter;
   });
 
-
+  const handleClipTypeChange = (e) => {
+    setClipFilter(e.target.value);
+  };
 
   return (
     <>
-      <Typography variant="h5" component="h3">
+      <Typography variant="h4" component="h3">
         Overview
       </Typography>
 
@@ -77,15 +91,32 @@ const MovieDetails = ({ movie, videoData }) => {
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
-      <Typography variant="h6" component="p">
-        Movie Clips 
+      <Typography variant="h4" component="h3">
+        <Typography variant="h4" component="h3">
+          Videos
+        </Typography>
       </Typography>
+      <InputLabel id="demo-simple-select-filled-label" variant="h4">
+        Select Video Filter{" "}
+      </InputLabel>
+      <Select
+        labelId="clipType-label"
+        id="clipType-select"
+        value={clipFilter}
+        onChange={handleClipTypeChange}
+      >
+        {clipFilters.map((filter) => {
+          return (
+            <MenuItem key={filter.id} value={filter.name}>
+              {filter.name}
+            </MenuItem>
+          );
+        })}
+      </Select>
       <Paper component="ul" sx={styles.chipSet}>
-        
-          {displayedVideos.map((item) => (
-              <YouTube embedId={item.key} caption={item.name} />
-          ))}
-        
+        {displayedVideos.map((item) => (
+          <YouTube embedId={item.key} caption={item.name} />
+        ))}
       </Paper>
 
       <Fab
