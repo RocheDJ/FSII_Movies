@@ -2,7 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import MovieDetails from "../components/movieDetails";
 import PageTemplate from "../components/templateMoviePage";
-import { getMovie } from "../api/tmdb-api";
+import { getMovie,getMovieVideos } from "../api/tmdb-api";
 import { useQuery } from "react-query";
 import Spinner from "../components/spinner";
 
@@ -16,6 +16,8 @@ const MovieDetailsPage = (props) => {
     isError,
   } = useQuery(["movie", { id: id }], getMovie);
 
+  const getVideoResponse = useQuery(["videoDataQuery",{  id: id } ],getMovieVideos);
+
   if (isLoading) {
     return <Spinner />;
   }
@@ -23,12 +25,29 @@ const MovieDetailsPage = (props) => {
   if (isError) {
     return <h1>{error.message}</h1>;
   }
+
+//retrieve the video Data
+
+  if (getVideoResponse.isLoading) {
+    return <Spinner />;
+  }
+
+  if (getVideoResponse.isError) {
+    return (
+      <h1>
+        `There was an error video Data`${getVideoResponse.error.message}
+      </h1>
+    );
+  }
+
+  const videoData = getVideoResponse.data ? getVideoResponse.data.results : [];
+
   return (
     <>
       {movie ? (
         <>
           <PageTemplate movie={movie}>
-            <MovieDetails movie={movie} />
+            <MovieDetails movie={movie} videoData={videoData}/>
           </PageTemplate>
         </>
       ) : (

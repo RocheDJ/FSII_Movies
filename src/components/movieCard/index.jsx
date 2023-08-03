@@ -12,6 +12,7 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import Tooltip from "@mui/material/Tooltip";
 
+
 import img from "../../images/film-poster-placeholder.png";
 import { Link } from "react-router-dom";
 import { MoviesContext } from "../../contexts/moviesContext";

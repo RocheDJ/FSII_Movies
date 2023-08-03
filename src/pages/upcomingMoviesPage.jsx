@@ -20,7 +20,8 @@ const UpcomingMoviesPage = (props) => {
     getUpCommingMovies
   );
   
-  const tvResponse = useQuery("discoverTrendingTV", getTrendingTvPrograms);
+  const tvResponse = useQuery(["discoverTrendingTV", { pageID: tmdbPage }],
+                                                    getTrendingTvPrograms);
   const [ tvOrMovie, setTvOrMovie ] = React.useState("movie");
   
 
@@ -76,6 +77,7 @@ const UpcomingMoviesPage = (props) => {
       TVMovieChange={TVMovieChange}
       handleDataPageIndexChange={handleDataPageIndexChange}
       tmdbPage={tmdbPage}
+      tvOrMovie={props.tvOrMovie}
       faveIconAction={(movie) => {
         return <AddToFavouritesIcon movie={movie} tvOrMovie={tvOrMovie} />;
       }}

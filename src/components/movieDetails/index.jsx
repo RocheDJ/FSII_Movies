@@ -9,7 +9,9 @@ import Typography from "@mui/material/Typography";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import Fab from "@mui/material/Fab";
 import Drawer from "@mui/material/Drawer";
-import MovieReviews from '../movieReviews'
+import MovieReviews from "../movieReviews";
+
+import YouTube from "../youtube";
 
 const styles = {
   chipSet: {
@@ -24,15 +26,23 @@ const styles = {
   chipLabel: {
     margin: 0.5,
   },
-  fab: { 
+  fab: {
     position: "fixed",
     top: 50,
     right: 2,
   },
 };
 
-const MovieDetails = ( {movie}) => {
+const MovieDetails = ({ movie, videoData }) => {
   const [drawerOpen, setDrawerOpen] = useState(false); // New
+  const [clipFilter,setClipFilter] = useState("Clip");
+
+  let displayedVideos = videoData
+  .filter((p) => {
+    return p.type === clipFilter;
+  });
+
+
 
   return (
     <>
@@ -50,10 +60,11 @@ const MovieDetails = ( {movie}) => {
         </li>
         {movie.genres.map((g) => (
           <li key={g.name}>
-            <Chip label={g.name}  />
+            <Chip label={g.name} />
           </li>
         ))}
       </Paper>
+
       <Paper component="ul" sx={styles.chipSet}>
         <Chip icon={<AccessTimeIcon />} label={`${movie.runtime} min.`} />
         <Chip
@@ -66,19 +77,34 @@ const MovieDetails = ( {movie}) => {
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
-      <Fab    
+      <Typography variant="h6" component="p">
+        Movie Clips 
+      </Typography>
+      <Paper component="ul" sx={styles.chipSet}>
+        
+          {displayedVideos.map((item) => (
+              <YouTube embedId={item.key} caption={item.name} />
+          ))}
+        
+      </Paper>
+
+      <Fab
         color="secondary"
         variant="extended"
-        onClick={() =>setDrawerOpen(true)}
+        onClick={() => setDrawerOpen(true)}
         sx={styles.fab}
       >
         <NavigationIcon />
         Reviews
       </Fab>
-      <Drawer anchor="top" open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+      <Drawer
+        anchor="top"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+      >
         <MovieReviews movie={movie} />
       </Drawer>
     </>
   );
 };
-export default  MovieDetails ;
+export default MovieDetails;

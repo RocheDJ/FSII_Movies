@@ -22,6 +22,7 @@ import {
 
 // testing
 import SandBox from "./components/sandbox";
+
 import TvContextProvider from "./contexts/tvContext";
 
 //
@@ -88,12 +89,14 @@ const App = () => {
                 element={
                   <UpcomingMoviesPage
                     handleTVMovieChange={handleTVMovieChange}
+                    tvOrMovie={AppIsTV}
                   />
                 }
               />
               <Route path="/tv/trending" 
                 element={<TrendingTVPage />} 
                 handleTVMovieChange={handleTVMovieChange}
+                tvOrMovie={AppIsTV}
               />
 
 
