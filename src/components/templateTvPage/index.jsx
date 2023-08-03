@@ -43,7 +43,7 @@ const TemplateTvPage = ({ tvShow, children }) => {
   return (
     <>
       <TvHeader tvShow={tvShow} />
-      <Grid container spacing={5} style={{ padding: "15px" }}>
+      <Grid container spacing={5} style={{ padding: "15px"}}>
         <Grid item xs={2}>
           <div sx={styles.gridListRoot}>
             <ImageList cols={2}>

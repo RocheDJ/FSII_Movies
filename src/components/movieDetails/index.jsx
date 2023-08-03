@@ -97,7 +97,7 @@ const MovieDetails = ({ movie, videoData }) => {
         </Typography>
       </Typography>
       <InputLabel id="demo-simple-select-filled-label" variant="h4">
-        Select Video Filter{" "}
+        Filter{" "}
       </InputLabel>
       <Select
         labelId="clipType-label"

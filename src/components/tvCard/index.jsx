@@ -19,7 +19,7 @@ import IconButton from "@mui/material/IconButton";
 import InfoIcon from "@mui/icons-material/Info";
 
 const styles = {
-  card: { maxWidth: 250, height: 650 },
+  card: { maxWidth: 250, height: 720 },
   media: { height: 350 },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",

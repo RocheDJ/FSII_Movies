@@ -11,6 +11,7 @@ import excludeVariablesFromRoot from "@mui/material/styles/excludeVariablesFromR
 const styles = {
   root: {
     padding: "20px",
+    backgroundColor: 'teal',
   },
   fab: {
     marginTop: 8,

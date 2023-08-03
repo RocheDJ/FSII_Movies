@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import { MoviesContext } from "../../contexts/moviesContext";
 
 const styles = {
-  card: { maxWidth: 250, height: 650 },
+  card: { maxWidth: 250, height: 720 },
   media: { height: 350 },
   avatar: {
     backgroundColor: "rgb(255, 0, 0)",

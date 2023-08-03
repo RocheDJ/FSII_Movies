@@ -10,6 +10,7 @@ import TvList from "../tvList";
 const styles = {
   root: {
     padding: "20px",
+    backgroundColor: 'teal',
   },
   fab: {
     marginTop: 8,
