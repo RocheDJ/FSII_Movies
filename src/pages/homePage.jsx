@@ -20,8 +20,9 @@ const HomePage = (props) => {
     getMovies
   );
 
-  const tvResponse = useQuery("discoverTV", getTVPrograms);
-
+  const tvResponse = useQuery(["discoverTV",{ pageID: tmdbPage }],
+   getTVPrograms
+  );
 
   // retrieve the movie data
   if (isLoading) {

@@ -19,11 +19,13 @@ export const getMovies = (args) => {
 };
 
 
-export const getTVPrograms = () => {
+export const getTVPrograms = (args) => {
+  const [, idPart] = args.queryKey;
+  const  id  = idPart.pageID;
   return fetch(
     `https://api.themoviedb.org/3/discover/tv?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&sort_by=popularity.desc&page=1&with_watch_providers=8&watch_region=IE`
+    }&language=en-US&sort_by=popularity.desc&page=${id}&with_watch_providers=8&watch_region=IE`
   )
     .then((response) => {
       if (!response.ok) {
@@ -36,11 +38,13 @@ export const getTVPrograms = () => {
     });
 };
 
-export const getTrendingTvPrograms = () => {
+export const getTrendingTvPrograms = (args) => {
+  const [, idPart] = args.queryKey;
+  const  id  = idPart.pageID;
   return fetch(
     `https://api.themoviedb.org/3/trending/tv/week?api_key=${
       import.meta.env.VITE_TMDB_KEY
-    }&language=en-US&sort_by=popularity.desc&page=1&with_watch_providers=8&watch_region=IE`
+    }&language=en-US&sort_by=popularity.desc&page=${id}&with_watch_providers=8&watch_region=IE`
   )
     .then((response) => {
       if (!response.ok) {

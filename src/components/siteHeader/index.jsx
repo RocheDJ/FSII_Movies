@@ -22,7 +22,7 @@ const styles = {
 const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 // ----- Header Code -----------------------
-const SiteHeader = ({ AppIsTV }) => {
+const SiteHeader = (props) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
   const [myColor, setMyColor,] = useState("primary");
@@ -39,7 +39,6 @@ const SiteHeader = ({ AppIsTV }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  
 
   function MenuItems() {
     let menuOptions = [
@@ -49,7 +48,7 @@ const SiteHeader = ({ AppIsTV }) => {
       { label: "Upcoming", path: "/movies/upcoming" },
     ];
     setMyColor("primary");
-    if (AppIsTV == "tv") {
+    if (props.AppIsTV == "tv") {
       menuOptions = [
         { label: "Home", path: "/" },
         { label: "Favorites", path: "/favorites" },
@@ -84,15 +83,6 @@ const SiteHeader = ({ AppIsTV }) => {
         <Typography variant="h6" sx={styles.title}>
           All you ever wanted to know about Movies and TV!
         </Typography>
-        
-        <Switch
-            checked={(AppIsTV=="tv")}
-            // onChange={() => setIsTV(!isTV)}
-            name="loading"
-            color="warning"
-          />
-        {AppIsTV}
-
         {isMobile ? (
           <>
             <IconButton

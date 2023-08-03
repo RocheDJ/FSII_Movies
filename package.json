@@ -21,9 +21,7 @@
     "build-storybook": "build-storybook",
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -b dist -d dist"
+    "preview": "vite preview"
   },
   "eslintConfig": {
     "extends": [

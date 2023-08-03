@@ -91,7 +91,11 @@ const App = () => {
                   />
                 }
               />
-              <Route path="/tv/trending" element={<TrendingTVPage />} />
+              <Route path="/tv/trending" 
+                element={<TrendingTVPage />} 
+                handleTVMovieChange={handleTVMovieChange}
+              />
+
 
               <Route path="/reviews/:id" element={<MovieReviewPage />} />
               <Route path="/reviews/form" element={<AddMovieReviewPage />} />

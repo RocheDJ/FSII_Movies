@@ -1,15 +1,26 @@
 import React from "react";
-import Movie from "../movieCard";
 import Grid from "@mui/material/Grid";
+import Tv from "../tvCard";
 
-const TvList = ({  action, tvPrograms }) => {
+const TvList = ({ faveIconAction, tvPrograms, 
+                    tvOrMovie,removeFaveIconAction,
+                      addToPlaylistIconAction,removeFromPlaylistIconAction}) => {
+
   let tvCards = tvPrograms.map((p) =>(
     <Grid key={p.id} item xs={12} sm={6} md={4} lg={3} xl={2}>
-    <Movie key={p.id} movie={p} action={action} />
+    <Tv key={p.id} tvShow={p} faveIconAction={faveIconAction} 
+                              removeFaveIconAction={removeFaveIconAction}
+                              addToPlaylistIconAction={addToPlaylistIconAction}
+                              removeFromPlaylistIconAction={removeFromPlaylistIconAction} />
   </Grid>
   ));
   
-  return tvCards;
+ 
+  const  retValue =  tvCards;
+  
+  return retValue;
 };
+
+
 
 export default TvList;
