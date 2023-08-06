@@ -14,6 +14,7 @@ import SiteHeader from "./components/siteHeader";
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import MoviesContextProvider from "./contexts/moviesContext";
 import TrendingTVPage from "./pages/trendingTVPage";
+import Login from "./components/login/Login";
 
 import {
   setSessionCookie,
@@ -40,18 +41,23 @@ const queryClient = new QueryClient({
 const App = () => {
   // default to looking at movies
   const [AppIsTV, setAppIsTV] = useState("movie");
+  const [token, setToken] = useState(); // for login
   const sessionInfo = getSessionCookie();
 
-  
+  // if no token is set then retune the login page
+  if (!token) {
+    return <Login setToken={setToken} />;
+  }
+
   const handleTVMovieChange = (value) => {
     console.log(`Index page Handle TV Movie change value= ${value}`);
     setAppIsTV(value);
     const sessionAppIsTV = value;
-    setSessionCookie({sessionAppIsTV});
+    setSessionCookie({ sessionAppIsTV });
   };
 
-  if (( sessionInfo.sessionAppIsTV ==="tv") && (AppIsTV ==="movie")) {
-    handleTVMovieChange("tv")
+  if (sessionInfo.sessionAppIsTV === "tv" && AppIsTV === "movie") {
+    handleTVMovieChange("tv");
   }
 
   return (
@@ -63,8 +69,12 @@ const App = () => {
             <Routes>
               <Route
                 path="/"
-                element={<HomePage handleTVMovieChange={handleTVMovieChange} 
-                tvOrMovie={AppIsTV}/>}
+                element={
+                  <HomePage
+                    handleTVMovieChange={handleTVMovieChange}
+                    tvOrMovie={AppIsTV}
+                  />
+                }
               />
               <Route
                 path="/favorites"
@@ -93,12 +103,12 @@ const App = () => {
                   />
                 }
               />
-              <Route path="/tv/trending" 
-                element={<TrendingTVPage />} 
+              <Route
+                path="/tv/trending"
+                element={<TrendingTVPage />}
                 handleTVMovieChange={handleTVMovieChange}
                 tvOrMovie={AppIsTV}
               />
-
 
               <Route path="/reviews/:id" element={<MovieReviewPage />} />
               <Route path="/reviews/form" element={<AddMovieReviewPage />} />
