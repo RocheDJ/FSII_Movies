@@ -147,7 +147,8 @@ No persistance used in this application.
 ### Middle ware 
 
 #### A middleware app was constructed to allow for user logon and registration.
-This app is a follows and ran in node express.
+This app is a follows and runs in node express.
+Note server app for demo only as cors too open.
 
 ````
 const express = require("express");
@@ -155,6 +156,11 @@ const cors = require("cors");
 const mysql = require("mysql2");
 const app = express();
 const bodyParser = require("body-parser");
+const https = require("https");
+const fs = require("fs");
+
+let key = fs.readFileSync("--------------/privkey.pem", "utf-8");
+let cert = fs.readFileSync("-------------/fullchain.pem", "utf-8");
 
 const db = mysql.createConnection({
   user: "react",
@@ -163,18 +169,31 @@ const db = mysql.createConnection({
   database: "loginsystem",
 });
 
-app.use(cors(),
- express.json(),
- bodyParser.urlencoded({ extended: true }));
 
-app.post("/register", (req, res) => {
+
+const options = {
+  key: key,
+  cert: cert,
+};
+
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(
+  cors(),
+  express.json(),
+  bodyParser.urlencoded({ extended: true })
+);
+
+app.post("/register",cors(), (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   db.execute(
     "INSERT INTO users (username, password) VALUES (?,?)",
     [username, password],
     (err, result) => {
-     
       if (err) {
         console.log(err);
         res.send({ err: err });
@@ -187,12 +206,14 @@ app.post("/register", (req, res) => {
   );
 });
 
-app.post("/login", (req, res) => {
+app.post("/login",cors(), (req, res) => {
   const webReq = req;
+  
   const username = req.body.username;
   const password = req.body.password;
-
-  db.execute(
+  try{
+	  console.log("login request " + username); 
+	    db.execute(
     "SELECT * FROM users WHERE username = ? AND password = ?",
     [username, password],
     (err, result) => {
@@ -201,25 +222,27 @@ app.post("/login", (req, res) => {
       }
 
       if (result.length > 0) {
-        result.message ="log in ok";
-        res.send( {
-                   token: 'Token 1234123',
-                    id : result.id,
-                    user : username
-                   });
-      } else 
-        {
-          res.send(result);
-        };
+        result.message = "log in ok";
+        res.send({
+          token: "Token 1234123",
+          id: result.id,
+          user: username,
+        });
+      } else {
+        res.send(result);
+      }
     }
   );
+  }catch(e){
+	console.log(e);
+  }
+  
+
 });
 
-app.listen(3001, () => {
-  console.log("running server");
+https.createServer(options, app).listen(3001, function (req, res) {
+   console.log("Server started at port 3001"); //and here
 });
-
-
 
 ```` 
 
