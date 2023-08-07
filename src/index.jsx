@@ -5,7 +5,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
-import TvPage from "./pages/TvDetailsPage";
+import TvPage from "./pages/tvDetailsPage";
 import FavouriteMoviesPage from "./pages/favouriteMoviesPage";
 import WatchListMoviesPage from "./pages/watchlistMoviesPage";
 import MovieReviewPage from "./pages/movieReviewPage";
