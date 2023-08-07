@@ -23,7 +23,7 @@ export default {
 export const Basic = () => {
   return (
     <TvCard
-      movie={SampleTvShow}
+      tvShow={SampleTvShow}
       faveIconAction={(movie) => <AddToFavouritesIcon movie={movie} />}
       removeFaveIconAction={(movie) => <AddToFavouritesIcon movie={movie} />}
       addToPlaylistIconAction={(movie) => <AddToPlaylistIcon movie={movie} />}

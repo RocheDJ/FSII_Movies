@@ -56,7 +56,9 @@ As well as refining some of the features from the class the following new and ex
 
 
 ## Storybook.
-
+Revised TV and movies card layout and control icons for add to faverites, info and add to watchlist.
+> Storybook TV card
+![][image13]
 
 
 ## Authentication.
@@ -76,12 +78,38 @@ As well as refining some of the features from the class the following new and ex
 All routes are protected as the user must login to the site.
 
 
+#### Protected functionality.
 
-#### Protected functionality. (if relevant)
+One logged ino the app all options are available.
+Login is by means of a token stored in sessionStorage. Reference `./src/components/app/useToken.js`
 
-[ Briefly state any app functionality that requires authentication, e.g. only authenticated users can tag a movie as a 'favourite'.]
+```` 
+import { useState } from "react";
 
-#### Supabase (if relevant)
+export default function useToken() { 
+  const getToken = () => {
+    const tokenString = sessionStorage.getItem("token");
+    const userToken = JSON.parse(tokenString);
+    return userToken?.token;
+  };
+
+  const [token, setToken] = useState();
+
+  const saveToken = userToken => {
+    sessionStorage.setItem('token', JSON.stringify(userToken));
+    setToken(userToken.token);
+  };
+
+  return {
+    setToken: saveToken,
+    token
+  }
+}
+````
+
+
+
+#### Supabase 
 
 Not used
 
@@ -97,10 +125,103 @@ At the moment the validation middle ware has not been deployed.
 
 ## Persistence.
 
+No persistance used in this application.
 
 
 ## Additional Information.
 
+### As well as google search and class notes the following  additional resources were used.
+
+[Digital Ocean - Login](https://www.digitalocean.com/community/tutorials/how-to-add-login-authentication-to-react-applications)
+
+[medium.com-JWT aut](https://medium.com/@gsandamali30/jwt-based-user-authentication-using-reactjs-node-express-and-mysql-41b5bedde11f)
+
+[Create React App - Deployment](https://create-react-app.dev/docs/deployment/)
+
+[Smart Dev - Adding Video](https://smartdevpreneur.com/four-examples-of-material-ui-cardmedia/#CardMedia_IFrame_Examples)
+
+[MUI - Getting started](https://mui.com/material-ui/getting-started/example-projects/)
+
+[MUI - Side Drawer](https://mui.com/material-ui/react-drawer/)
+
+### Middle ware 
+
+#### A middleware app was constructed to allow for user logon and registration.
+This app is a follows and ran in node express.
+
+````
+const express = require("express");
+const cors = require("cors");
+const mysql = require("mysql2");
+const app = express();
+const bodyParser = require("body-parser");
+
+const db = mysql.createConnection({
+  user: "react",
+  host: "localhost",
+  password: "react",
+  database: "loginsystem",
+});
+
+app.use(cors(),
+ express.json(),
+ bodyParser.urlencoded({ extended: true }));
+
+app.post("/register", (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  db.execute(
+    "INSERT INTO users (username, password) VALUES (?,?)",
+    [username, password],
+    (err, result) => {
+     
+      if (err) {
+        console.log(err);
+        res.send({ err: err });
+      }
+
+      if (result.affectedRows == 1) {
+        res.send(result);
+      } else ({ message: "Error in registering" });
+    }
+  );
+});
+
+app.post("/login", (req, res) => {
+  const webReq = req;
+  const username = req.body.username;
+  const password = req.body.password;
+
+  db.execute(
+    "SELECT * FROM users WHERE username = ? AND password = ?",
+    [username, password],
+    (err, result) => {
+      if (err) {
+        res.send({ err: err });
+      }
+
+      if (result.length > 0) {
+        result.message ="log in ok";
+        res.send( {
+                   token: 'Token 1234123',
+                    id : result.id,
+                    user : username
+                   });
+      } else 
+        {
+          res.send(result);
+        };
+    }
+  );
+});
+
+app.listen(3001, () => {
+  console.log("running server");
+});
+
+
+
+```` 
 
 
 [image1]: ./images/image_1.png
@@ -115,3 +236,4 @@ At the moment the validation middle ware has not been deployed.
 [image10]: ./images/login.png
 [image11]: ./images/logout_icon.png
 [image12]: ./images/logout.png
+[image13]: ./images/sbTVcard.png
