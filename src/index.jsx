@@ -14,7 +14,7 @@ import SiteHeader from "./components/siteHeader";
 import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import MoviesContextProvider from "./contexts/moviesContext";
 import TrendingTVPage from "./pages/trendingTVPage";
-import Login from "./components/login/Login";
+import Login from "./components/login/login";
 import LogoutPage from "./pages/logoutPage";
 
 import useToken from './components/app/useToken';
