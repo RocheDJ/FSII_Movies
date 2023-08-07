@@ -1,7 +1,7 @@
 
 export async function loginUser(credentials) {   
-   // return fetch('http://localhost:3001/login', {
-    return fetch('http://18.202.168.174:3001/login', {
+    //return fetch('http://localhost:3001/login', {
+    return fetch('https://www.kilderryds00.com:3001/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
