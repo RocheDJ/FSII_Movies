@@ -11,7 +11,9 @@ import Menu from "@mui/material/Menu";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Switch from '@mui/material/Switch';
+import LogoutIcon from "@mui/icons-material/Logout";
+
+
 // header style
 const styles = {
   title: {
@@ -25,18 +27,21 @@ const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 const SiteHeader = (props) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
-  const [myColor, setMyColor,] = useState("primary");
+  const [myColor, setMyColor] = useState("primary");
   const open = Boolean(anchorEl);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
-  
-  
+
   const handleMenuSelect = (pageURL) => {
     navigate(pageURL);
   };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
+  };
+
+  const handleLogOut= () => {
+    handleMenuSelect("/logout");
   };
 
 
@@ -53,7 +58,7 @@ const SiteHeader = (props) => {
         { label: "Home", path: "/" },
         { label: "Favorites", path: "/favorites" },
         { label: "WatchList", path: "/watchlist" },
-        { label: "Trending", path: "/tv/trending" },  
+        { label: "Trending", path: "/tv/trending" },
       ];
       setMyColor("secondary");
     }
@@ -75,51 +80,53 @@ const SiteHeader = (props) => {
 
   return (
     <>
-     <AppBar position="fixed" elevation={0} color={myColor}>
-      <Toolbar>
-        <Typography variant="h4" sx={styles.title}>
-          Dave'sTMDB Client
-        </Typography>
-        <Typography variant="h6" sx={styles.title}>
-          All you ever wanted to know about Movies and TV!
-        </Typography>
-        {isMobile ? (
-          <>
-            <IconButton
-              aria-label="menu"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-              size="large"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={open}
-              onClose={() => setAnchorEl(null)}
-            >
-             <MenuItems />
-            </Menu>
-          </>
-        ) : (
-          <MenuItems />
-        )}
-      </Toolbar>
+      <AppBar position="fixed" elevation={0} color={myColor}>
+        <Toolbar>
+          <IconButton aria-label="logout" color="inherit">
+            <LogoutIcon  onClick={handleLogOut} />
+          </IconButton>
+          <Typography variant="h4" sx={styles.title}>
+            Dave'sTMDB Client
+          </Typography>
+          <Typography variant="h6" sx={styles.title}>
+            All you ever wanted to know about Movies and TV!
+          </Typography>
+          {isMobile ? (
+            <>
+              <IconButton
+                aria-label="menu"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+                size="large"
+              >
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={open}
+                onClose={() => setAnchorEl(null)}
+              >
+                <MenuItems />
+              </Menu>
+            </>
+          ) : (
+            <MenuItems />
+          )}
+        </Toolbar>
       </AppBar>
       <Offset />
-     
     </>
   );
 };

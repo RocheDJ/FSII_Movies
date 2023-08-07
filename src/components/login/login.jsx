@@ -1,6 +1,5 @@
 //see https://www.digitalocean.com/community/tutorials/how-to-add-login-authentication-to-react-applications
 import React from "react";
-import PropTypes from "prop-types";
 import "./login.css";
 import { loginUser } from "../../api/login-api";
 import Card from "@mui/material/Card";
@@ -10,10 +9,8 @@ import CardMedia from "@mui/material/CardMedia";
 import img from "../../images/user.png";
 import CardContent from "@mui/material/CardContent";
 import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import IconButton from "@mui/material/IconButton";
 import FormControl from "@mui/material/FormControl";

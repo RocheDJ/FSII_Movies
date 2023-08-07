@@ -15,6 +15,10 @@ import UpcomingMoviesPage from "./pages/upcomingMoviesPage";
 import MoviesContextProvider from "./contexts/moviesContext";
 import TrendingTVPage from "./pages/trendingTVPage";
 import Login from "./components/login/Login";
+import LogoutPage from "./pages/logoutPage";
+
+import useToken from './components/app/useToken';
+
 
 import {
   setSessionCookie,
@@ -41,13 +45,25 @@ const queryClient = new QueryClient({
 const App = () => {
   // default to looking at movies
   const [AppIsTV, setAppIsTV] = useState("movie");
-  const [token, setToken] = useState(); // for login
+ // const [token, setToken] = useState(); // for login
   const sessionInfo = getSessionCookie();
+  const { token, setToken } = useToken();
 
-  // if no token is set then retune the login page
+  // if no token is set then return the login page
   if (!token) {
     return <Login setToken={setToken} />;
+  }else if (token === ''){
+    return <Login setToken={setToken} />;
   }
+
+  const handleLogout = (value) => {
+    const clearToken = {
+        token: '',
+        id : '0',
+        user : '-'
+      }
+    setToken(clearToken);
+  };
 
   const handleTVMovieChange = (value) => {
     console.log(`Index page Handle TV Movie change value= ${value}`);
@@ -59,6 +75,9 @@ const App = () => {
   if (sessionInfo.sessionAppIsTV === "tv" && AppIsTV === "movie") {
     handleTVMovieChange("tv");
   }
+
+ 
+
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -109,6 +128,11 @@ const App = () => {
                 handleTVMovieChange={handleTVMovieChange}
                 tvOrMovie={AppIsTV}
               />
+
+              <Route
+                 path="/logout"
+                 element={<LogoutPage handleLogout={handleLogout}/>}
+              />    
 
               <Route path="/reviews/:id" element={<MovieReviewPage />} />
               <Route path="/reviews/form" element={<AddMovieReviewPage />} />
