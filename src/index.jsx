@@ -76,9 +76,6 @@ const App = () => {
     handleTVMovieChange("tv");
   }
 
- 
-
-
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
