@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-import YoutubeEmbed from "./YoutubeEmbed";
+import YoutubeEmbed from "./youtubeEmbed";
 
 const SandBox = ( {AppIsTV}) => {
     console.log("sandbox" ,{AppIsTV} );
